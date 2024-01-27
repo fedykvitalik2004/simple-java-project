@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
+      - name: Cause of the trigger
+        run: echo "It was triggered because of a ${{ github.event_name }}"
       - name: Install Java
         uses: actions/setup-java@v4
         with:
