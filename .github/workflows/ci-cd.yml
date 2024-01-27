@@ -1,0 +1,31 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - name: Clean and install dependencies
+        run: "mvn clean install -B"
+      - name: Build project
+        run: "mvn package"
+      - name: Run unit tests
+        run: "mvn test"
